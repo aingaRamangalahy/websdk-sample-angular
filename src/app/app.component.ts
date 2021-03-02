@@ -15,14 +15,19 @@ ZoomMtg.prepareJssdk();
 export class AppComponent implements OnInit {
 
   // setup your signature endpoint here: https://github.com/zoom/websdk-sample-signature-node.js
-  signatureEndpoint = ''
-  apiKey = ''
-  meetingNumber = '123456789'
+  signatureEndpoint = 'http://localhost:4000'
+  apiKey = 'rDP8F22hT52n2iCpKros-A'
+ 
   role = 0
-  leaveUrl = 'http://localhost:4200'
-  userName = 'Angular'
-  userEmail = ''
-  passWord = ''
+  leaveUrl = 'http://localhost:4210'
+  userName = 'Angular test' // replace with logged in user name
+  userEmail = '' // replace with logged in user email
+  
+  // to store on database  -> exposant meetingNumber + meetingPassword
+  meetingNumber = '93158318234' // example: exposant1 meeting id
+  meetingNumber2 = '92126715220' // example: exposant2 meeting id
+  meetingPassword = 'uhj2Fv' // example: exposant1 meeting password
+  meetingPassword2 = 'w4680A' // example: exposant2 meeting password
 
   constructor(public httpClient: HttpClient, @Inject(DOCUMENT) document) {
 
@@ -32,14 +37,20 @@ export class AppComponent implements OnInit {
 
   }
 
-  getSignature() {
+  /**
+   * 
+   * @param meetingNumber 
+   * @param password 
+   */
+  getSignature(meetingNumber: string, password) {
+    console.log("getting signature......", meetingNumber)
     this.httpClient.post(this.signatureEndpoint, {
-	    meetingNumber: this.meetingNumber,
+	    meetingNumber: meetingNumber,
 	    role: this.role
     }).toPromise().then((data: any) => {
       if(data.signature) {
         console.log(data.signature)
-        this.startMeeting(data.signature)
+        this.startMeeting(data.signature, meetingNumber, password)
       } else {
         console.log(data)
       }
@@ -48,7 +59,14 @@ export class AppComponent implements OnInit {
     })
   }
 
-  startMeeting(signature) {
+
+  /**
+   * 
+   * @param signature
+   * @param meetingNumber 
+   * @param password 
+   */
+  startMeeting(signature, meetingNumber, password) {
 
     document.getElementById('zmmtg-root').style.display = 'block'
 
@@ -60,11 +78,11 @@ export class AppComponent implements OnInit {
 
         ZoomMtg.join({
           signature: signature,
-          meetingNumber: this.meetingNumber,
+          meetingNumber: meetingNumber,
           userName: this.userName,
           apiKey: this.apiKey,
           userEmail: this.userEmail,
-          passWord: this.passWord,
+          passWord: password,
           success: (success) => {
             console.log(success)
           },
