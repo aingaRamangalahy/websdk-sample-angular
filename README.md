@@ -31,7 +31,7 @@ To get started, clone the repo:
    | leaveUrl                   | Required, the url the user is taken to once the meeting is over. |
    | userName                   | Required, A name for the user joining / starting the meeting / webinar. |
    | userEmail                   | Optional, the user joining / starting the meeting / webinar. |
-   | passWord                   | Optional, meeting password. Leave as empty string if the meeting does not require a password. |
+   | meetingPassword                   | Optional, meeting password. Leave as empty string if the meeting does not require a password. |
 
    Example:
 
@@ -43,7 +43,7 @@ To get started, clone the repo:
    leaveUrl = 'http://localhost:4200'
    userName = 'Angular'
    userEmail = ''
-   password = ''
+   meetingPassword = ''
    ```
 
 1. Save `app.component.ts`.
