@@ -49,7 +49,7 @@ To get started, clone the repo:
 1. Save `app.component.ts`.
 
 1. Run the app:
-
+s
    `$ ng serve --open`
 
 <!-- Deploy signature or run locally -->
